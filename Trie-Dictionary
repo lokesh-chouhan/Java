@@ -1,0 +1,90 @@
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+
+import java.util.*;
+
+public class Main
+{
+
+  static class TrieNode
+  {
+    HashMap < Character, TrieNode > map =
+      new HashMap < Character, TrieNode > ();
+    boolean isWord = false;
+    String mean;
+  }
+
+  static class Trie
+  {
+    TrieNode root = new TrieNode ();
+
+    public void addWord (String word, String mean)
+    {
+      TrieNode temp = root;
+
+      for (int i = 0; i < word.length (); i++)
+	{
+	  char c = word.charAt (i);
+
+	  if (!temp.map.containsKey (c))
+	    {
+	      temp.map.put (c, new TrieNode ());
+	    }
+
+	  temp = temp.map.get (c);
+
+	}
+
+      temp.isWord = true;
+      temp.mean = mean;
+    }
+
+    public String getMean (String word)
+    {
+      TrieNode temp = root;
+
+      for (int i = 0; i < word.length (); i++)
+	{
+	  char c = word.charAt (i);
+
+	  if (!temp.map.containsKey (c))
+	    {
+	      return "Word not found";
+	    }
+
+	  temp = temp.map.get (c);
+
+	}
+
+      if (temp.isWord)
+	return temp.mean;
+      else
+	return "Word not found";
+
+    }
+  }
+
+  public static void main (String[]args)
+  {
+
+
+    System.out.println ("Hello World");
+
+    Trie trie = new Trie ();
+
+    trie.addWord ("bat", "used to play cricket");
+    trie.addWord ("battle", "A big fight between enemies");
+    trie.addWord ("cat", "animal eats mouse");
+
+    System.out.println (trie.getMean ("bat"));
+    System.out.println (trie.getMean ("boy"));
+    System.out.println (trie.getMean ("battle"));
+    System.out.println (trie.getMean ("batt"));
+
+  }
+}
